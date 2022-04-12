@@ -17,20 +17,20 @@ subgraph cluster_c0 {
 label = "Core Domain";
 //Basket
 	c1 [label="Basket"]
-//Geocoding
-	c10 [label="Geocoding"]
+//GeoDistance
+	c10 [label="GeoDistance"]
 //LocationTracking
 	c11 [label="LocationTracking"]
 //Merchant
 	c12 [label="Merchant"]
 //Money
 	c13 [label="Money"]
-//Vehicle
-	c14 [label="Vehicle"]
-//VolumeUnit
-	c15 [label="VolumeUnit"]
 //package-info
-	c16 [label="package-info"]
+	c14 [label="package-info"]
+//Vehicle
+	c15 [label="Vehicle"]
+//VolumeUnit
+	c16 [label="VolumeUnit"]
 //Coordinates
 	c2 [label="Coordinates"]
 //DistanceUnit
@@ -41,12 +41,12 @@ label = "Core Domain";
 	c5 [label="FuelCardTransaction"]
 //FuelCardTransactionReport
 	c6 [label="FuelCardTransactionReport"]
-//FuelEconomy
-	c7 [label="FuelEconomy"]
 //FueldCard
-	c8 [label="FueldCard"]
-//GeoDistance
-	c9 [label="GeoDistance"]
+	c7 [label="FueldCard"]
+//FuelEconomy
+	c8 [label="FuelEconomy"]
+//Geocoding
+	c9 [label="Geocoding"]
 }
 //FuelCardTxListener
 	c17 [label="FuelCardTxListener"]
@@ -54,66 +54,64 @@ label = "Core Domain";
 	c18 [label="ReportDAO"]
 //SmartGISGeoCodingAdapter
 	c19 [label="SmartGISGeoCodingAdapter"]
-//WebServiceGPSTrackingAdapter
-	c20 [label="WebServiceGPSTrackingAdapter"]
 //FuelCardResource
-	c21 [label="FuelCardResource"]
+	c20 [label="FuelCardResource"]
+//package-info
+	c21 [label="package-info"]
 //ReportResource
 	c22 [label="ReportResource"]
+//WebServiceGPSTrackingAdapter
+	c23 [label="WebServiceGPSTrackingAdapter"]
 //package-info
-	c23 [label="package-info"]
+	c24 [label="package-info"]
 //VehicleDatastore
-	c24 [label="VehicleDatastore"]
-//package-info
-	c25 [label="package-info"]
+	c25 [label="VehicleDatastore"]
 //FuelCardJMXBean
 	c26 [label="FuelCardJMXBean"]
 //package-info
 	c27 [label="package-info"]
-//package-info
-	c28 [label="package-info"]
 	// null
 	c26 -> c26 [arrowhead=open];
 	// null
 	c3 -> c3 [arrowhead=open];
 	// null
-	c7 -> c7 [arrowhead=open];
+	c8 -> c8 [arrowhead=open];
 	// null
-	c9 -> c9 [arrowhead=open];
+	c10 -> c10 [arrowhead=open];
 	// null
 	c13 -> c13 [arrowhead=open];
 	// null
-	c15 -> c15 [arrowhead=open];
+	c16 -> c16 [arrowhead=open];
 	// null
 	c6 -> c5 [arrowhead=open];
 	// null
-	c11 -> c20 [dir=back,arrowtail=empty,style=dashed];
-	// null
 	c17 -> c18 [arrowhead=open];
 	// null
-	c5 -> c8 [arrowhead=open];
+	c5 -> c7 [arrowhead=open];
 	// null
-	c10 -> c19 [dir=back,arrowtail=empty,style=dashed];
+	c11 -> c23 [dir=back,arrowtail=empty,style=dashed];
+	// null
+	c4 -> c9 [arrowhead=open];
 	// null
 	c22 -> c18 [arrowhead=open];
 	// null
 	c1 -> c13 [arrowhead=open];
 	// null
-	c17 -> c24 [arrowhead=open];
+	c17 -> c25 [arrowhead=open];
 	// null
-	c21 -> c4 [arrowhead=open];
+	c8 -> c23 [arrowhead=open];
 	// null
-	c4 -> c10 [arrowhead=open];
+	c20 -> c4 [arrowhead=open];
 	// null
 	c4 -> c11 [arrowhead=open];
-	// null
-	c7 -> c20 [arrowhead=open];
 	// null
 	c5 -> c13 [arrowhead=open];
 	// null
 	c5 -> c12 [arrowhead=open];
 	// null
 	c17 -> c4 [arrowhead=open];
+	// null
+	c9 -> c19 [dir=back,arrowtail=empty,style=dashed];
 	// null
 	c5 -> c1 [arrowhead=open];
 }

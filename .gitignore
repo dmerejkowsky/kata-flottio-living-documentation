@@ -13,3 +13,5 @@ hs_err_pid*
 /*/.idea/
 /*/target/
 /target/
+.vs/
+obj/
