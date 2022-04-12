@@ -18,10 +18,21 @@ namespace Flottio.Tests
 {
     public class LivingDiagramTest
     {
-
-        private DotGraph graph = new DotGraph("Hexagonal Architecture", true);
         [Fact]
         public void GenerateDiagram()
+        {
+            var graph = CreateGraph();
+            string content = CreateContent(graph);
+
+            var title = "Living Diagram";
+            string templatePath = "./Ressources/viz-template.html";
+            const string targetFileName = "livinggdiagram.html";
+            TemplateFiller.CreateTargetFile(content, title, templatePath, targetFileName);
+
+            Check.That(File.Exists(targetFileName)).IsTrue();
+        }
+
+        private DotGraph CreateGraph()
         {
             Assembly flottioAssembly = typeof(Basket).Assembly;
 
@@ -33,6 +44,7 @@ namespace Flottio.Tests
             Dictionary<Type, int> elements = new Dictionary<Type, int>();
             var domainClasses = topLevelClasses.Where(classe => classe.Namespace.Contains(prefix + domainPrefix));
             DotSubGraph domainGraph = CreateSubGraph(domainClasses, "Core Domain", elements);
+            DotGraph graph = new DotGraph("Hexagonal Architecture", true);
             graph.Elements.Add(domainGraph);
 
             var infraClasses = topLevelClasses.Where(classe => classe.Namespace.Contains(prefix) && !classe.Namespace.Contains(domainPrefix));
@@ -65,16 +77,7 @@ namespace Flottio.Tests
                 }
             }
 
-            string content = CreateContent(graph);
-
-            string templatePath = "./Ressources/viz-template.html";
-            var template = ReadTemplate(templatePath);
-            var title = "Living Diagram";
-            var text = Evaluate(template, title, content);
-            Write("livinggdiagram.html", text);
-
-            //Check.That(compiledGraph).IsEqualTo("");
-
+            return graph;
         }
 
         private string CreateContent(DotGraph graph)
@@ -115,7 +118,7 @@ namespace Flottio.Tests
                             : edge.ArrowHead.ArrowType.ToString().ToLower();
                         stringBuilder.Append($"arrowhead={arrow},");
                     }
-                    if(edge.ArrowTail != null)
+                    if (edge.ArrowTail != null)
                     {
                         stringBuilder.Append($"arrowtail={edge.ArrowTail.ArrowType.ToString().ToLower()},");
                     }
@@ -129,29 +132,6 @@ namespace Flottio.Tests
             }
             stringBuilder.AppendLine("}");
             return stringBuilder.ToString();
-        }
-
-        private void Write(string fileFullName, string content)
-        {
-            using (var streamWriter = new StreamWriter(fileFullName))
-            {
-                streamWriter.Write(content);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-        }
-
-        private string Evaluate(string template, string title, string content)
-        {
-            return template.Replace("{0}", title).Replace("{1}", content);
-        }
-
-        private string ReadTemplate(string templatePath)
-        {
-            using (var streamReader = new StreamReader(templatePath))
-            {
-                return streamReader.ReadToEnd();
-            };
         }
 
         int idElement = 0;
