@@ -1,5 +1,13 @@
 using DotNetGraph;
+using DotNetGraph.Attributes;
+using DotNetGraph.SubGraph;
+using Flottio.FuelCardMonitoring.Domain;
+using NFluent;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using Xunit;
 
@@ -8,133 +16,73 @@ namespace Flottio.Tests
     public class LivingDiagramTest
     {
 
-        private DotGraph graph = new DotGraph("Hexagonal Architecture");
-
+        private DotGraph graph = new DotGraph("Hexagonal Architecture", true);
         [Fact]
-        public void generateDiagram()
+        public void GenerateDiagram()
         {
             Assembly flottioAssembly = typeof(Basket).Assembly;
 
+            String prefix = "Flottio.FuelCardMonitoring";
+            IEnumerable<Type> allClasses = flottioAssembly.GetTypes();
+            var topLevelClasses = allClasses.Where(classe => classe.Namespace.Contains(prefix));
 
-            //            String prefix = "flottio.fuelcardmonitoring";
-            //            ImmutableSet<ClassInfo> allClasses = classPath.getTopLevelClassesRecursive(prefix);
+            string domainPrefix = ".Domain";
+            var domainClasses = topLevelClasses.Where(classe => classe.Namespace.Contains(prefix + domainPrefix));
+            DotSubGraph domainGraph = CreateSubGraph(domainClasses, "Core Domain");
+            graph.Elements.Add(domainGraph);
 
-            //            Digraph digraph = graph.getDigraph();
-            //            digraph.setOptions("rankdir=LR");
+            var infraClasses = topLevelClasses.Where(classe => classe.Namespace.Contains(prefix) && !classe.Namespace.Contains(domainPrefix));
+            var infraSubGraph = CreateSubGraph(infraClasses, "Infra");
+            graph.Elements.Add(infraSubGraph);
 
-            //            Stream<ClassInfo> domain = allClasses.stream().filter(filter(prefix, "domain"));
-            //            Cluster core = digraph.addCluster("hexagon");
-            //            core.setLabel("Core Domain");
+            DotNetGraph.Compiler.DotCompiler compiler = new DotNetGraph.Compiler.DotCompiler(graph);
+            var compiledGraph = compiler.Compile();
 
-            //            // add all domain model elements first
-            //            domain.forEach(new Consumer<ClassInfo>()
-            //            {
+            string templatePath = "./Ressources/viz-template.html";
+            var template = ReadTemplate(templatePath);
+            var title = "Living Diagram";
+            var text = Evaluate(template, title, compiledGraph);
+            Write("livinggdiagram.html", text);
 
-            //            public void accept(ClassInfo ci)
-            //            {
-            //                Class clazz = ci.load();
-            //                core.addNode(clazz.getName()).setLabel(clazz.getSimpleName()).setComment(clazz.getSimpleName());
-            //            }
-            //        });
-
-            //		Stream<ClassInfo> infra = allClasses.stream().filter(filterNot(prefix, "domain"));
-            //        infra.forEach(new Consumer<ClassInfo>() {
-            //			public void accept(ClassInfo ci)
-            //        {
-            //            Class clazz = ci.load();
-            //            digraph.addNode(clazz.getName()).setLabel(clazz.getSimpleName()).setComment(clazz.getSimpleName());
-            //        }
-            //    });
-            //infra = allClasses.stream().filter(filterNot(prefix, "domain"));
-            //infra.forEach(new Consumer<ClassInfo>()
-            //{
-            //			public void accept(ClassInfo ci)
-            //    {
-            //        Class clazz = ci.load();
-            //        // API
-            //        for (Field field : clazz.getDeclaredFields())
-            //        {
-            //            Class <?> type = field.getType();
-            //            if (!type.isPrimitive())
-            //            {
-            //                digraph.addExistingAssociation(clazz.getName(), type.getName(), null, null,
-            //                        ASSOCIATION_EDGE_STYLE);
-            //            }
-            //        }
-
-            //        // SPI
-            //        for (Class intf : clazz.getInterfaces())
-            //        {
-            //            digraph.addExistingAssociation(intf.getName(), clazz.getName(), null, null, IMPLEMENTS_EDGE_STYLE);
-            //        }
-            //    }
-            //});
-
-            //// then wire them together
-            //domain = allClasses.stream().filter(filter(prefix, "domain"));
-            //domain.forEach(new Consumer<ClassInfo>()
-            //{
-
-            //            public void accept(ClassInfo ci)
-            //{
-            //    Class clazz = ci.load();
-            //    for (Field field : clazz.getDeclaredFields()) {
-            //    Class <?> type = field.getType();
-            //    if (!type.isPrimitive())
-            //    {
-            //        digraph.addExistingAssociation(clazz.getName(), type.getName(), null, null,
-            //                ASSOCIATION_EDGE_STYLE);
-            //    }
-            //}
-
-            //for (Class intf : clazz.getInterfaces())
-            //{
-            //    digraph.addExistingAssociation(intf.getName(), clazz.getName(), null, null, IMPLEMENTS_EDGE_STYLE);
-            //}
-            //			}
-            //		});
-
-            //// render into image
-            //String template = readTestResource("viz-template.html");
-
-            //String title = "Living Diagram";
-            //String content = graph.render().trim();
-            //String text = evaluate(template, title, content);
-            //write("", "livinggdiagram.html", text);
-            //	}
-
-            //	private Predicate<ClassInfo> filter(String prefix, String layer)
-            //{
-            //    return new Predicate<ClassInfo>()
-            //    {
-
-            //            public boolean test(ClassInfo ci)
-            //    {
-            //        boolean nameConvention = ci.getPackageName().startsWith(prefix)
-            //                && !ci.getSimpleName().endsWith("Test") && !ci.getSimpleName().endsWith("IT")
-            //                && ci.getPackageName().endsWith("." + layer);
-            //        return nameConvention;
-            //    }
-
-            //};
-            //	}
-
-            //	private Predicate<ClassInfo> filterNot(String prefix, String layer)
-            //{
-            //    return new Predicate<ClassInfo>()
-            //    {
-
-            //            public boolean test(ClassInfo ci)
-            //    {
-            //        boolean nameConvention = ci.getPackageName().startsWith(prefix)
-            //                && !ci.getSimpleName().endsWith("Test") && !ci.getSimpleName().endsWith("IT")
-            //                && !ci.getPackageName().endsWith("." + layer);
-            //        return nameConvention;
-            //    }
-
-            //};
-            //	}
+            Check.That(compiledGraph).IsEqualTo("");
         }
 
+        private void Write(string fileFullName, string content)
+        {
+            using (var streamWriter = new StreamWriter(fileFullName))
+            {
+                streamWriter.Write(content);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+        }
+
+        private string Evaluate(string template, string title, string content)
+        {
+            return template.Replace("{0}", title).Replace("{1}", content);
+        }
+
+        private string ReadTemplate(string templatePath)
+        {
+            using (var streamReader = new StreamReader(templatePath))
+            {
+                return streamReader.ReadToEnd();
+            };
+        }
+
+        private static DotSubGraph CreateSubGraph(IEnumerable<Type> classes, string subGraphIdentifier)
+        {
+            DotSubGraph subGraph = new DotSubGraph(subGraphIdentifier);
+            foreach (var topLevelClass in classes)
+            {
+                DotNetGraph.Core.IDotElement typeElement = new DotNetGraph.Node.DotNode(topLevelClass.Name);
+                subGraph.Elements.Add(typeElement);
+            }
+            subGraph.Label = subGraphIdentifier;
+            subGraph.Style = DotSubGraphStyle.Dashed;
+            subGraph.Color = new DotColorAttribute(Color.Red);
+
+            return subGraph;
+        }
     }
 }
