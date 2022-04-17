@@ -94,22 +94,25 @@ namespace Flottio.Tests
 
         private void Process(Type classe)
         {
-	        string comment = BlockQuote(classe.GetComment());
+	        string comment = BlockQuote(
+		        string.Empty//classe.GetComment()
+		        );
 	        AddTourStep(
 		        GetQuickDevTourStep(classe), 
 		        classe.Name, 
-		        classe.GetFullyQualifiedName(), 
+		        classe.FullName, 
 		        comment, 
-		        classe.GetLineNumber());
+		        0//classe.GetLineNumber()
+		        );
 
-	        if (classe.IsEnum()) {
+	        if (classe.IsEnum) {
 		        // for (JavaField field : classe.getEnumConstants()) {
 			       //  // printEnumConstant(field);
 		        // }
 		        // for (JavaMethod method : classe.GetMethods(false)) {
 			       //  //
 		        // }
-	        } else if (classe.IsInterface()) {
+	        } else if (classe.IsInterface) {
 		        // for (JavaClass subClass in classe.getDerivedClasses()) {
 			       //  // printSubClass(subClass);
 		        // }
@@ -120,9 +123,9 @@ namespace Flottio.Tests
 		        foreach (var m in classe.GetMethods()) {
 			        string name = m.Name;
 			        string qName = classe.FullName;
-			        string codeBlock = Code(m.GetCodeBlock());
-			        int lineNumber = m.GetLineNumber();
-			        TourStep step = GetQuickDevTourStep(m);
+			        string codeBlock = string.Empty; //Code(m.GetCodeBlock());
+			        int lineNumber = 0; //m.GetLineNumber();
+			        TourStep step = GetQuickDevTourStep(m.GetType());
 			        AddTourStep(step, name, qName, codeBlock, lineNumber);
 		        }
 	        }
@@ -142,16 +145,15 @@ namespace Flottio.Tests
         {
 	        if (step != null) {
 		        StringBuilder content = new StringBuilder();
-		        // content.append(name);
 		        content.Append(LinkSrcJava(name, qName, lineNumber));
 		        if (step.Description() != null) {
 			        content.Append(SEP);
-			        content.Append("*" + step.description().trim() + "*");
+			        content.Append("*" + step.Description().Trim() + "*");
 		        }
-		        if (comment != null) {
-			        content.Append(SEP);
-			        content.Append(comment);
-		        }
+		        // if (comment != null) {
+			       //  content.Append(SEP);
+			       //  content.Append(comment);
+		        // }
 		        content.Append(SEP);
 
 		        GetTourNamed(step.Name()).Put(step.Step(), content.ToString());
