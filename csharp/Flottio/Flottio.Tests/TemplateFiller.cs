@@ -26,7 +26,7 @@ namespace Flottio.Tests
             return template.Replace("{0}", title).Replace("{1}", content);
         }
 
-        private static string ReadTemplate(string templatePath)
+        public static string ReadTemplate(string templatePath)
         {
             using (var streamReader = new StreamReader(templatePath))
             {

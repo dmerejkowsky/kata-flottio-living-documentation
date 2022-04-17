@@ -27,6 +27,7 @@ namespace Flottio.Tests
             var title = "Living Diagram";
             string templatePath = "./Ressources/viz-template.html";
             const string targetFileName = "livinggdiagram.html";
+            
             TemplateFiller.CreateTargetFile(content, title, templatePath, targetFileName);
 
             Check.That(File.Exists(targetFileName)).IsTrue();
