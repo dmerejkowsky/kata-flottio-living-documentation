@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Flottio.FuelCardMonitoring.Domain;
@@ -73,15 +74,16 @@ namespace Flottio.Tests
             {
 	            sb.Append(WriteSightSeeingTour(tourName));
             }
-            
+
+            string targetFileName = "Quick_Developer_Tour.html";
             TemplateFiller.CreateTargetFile(
 	            sb.ToString(), 
 	            "Quick Developer Tour", 
 	            "./Ressources/strapdown-template.html", 
-	            "Quick_Developer_Tour.html");
+	            targetFileName);
 
-            Check.That(sb.ToString()).IsNotEmpty();
-            
+            Check.That(File.Exists(targetFileName)).IsTrue();
+            Check.That(sb.ToString()).IsEqualTo(File.ReadAllText("./Ressources/content_approved.txt"));
         }
 
         private void PrintAll()
@@ -133,12 +135,12 @@ namespace Flottio.Tests
 
         private TourStep GetQuickDevTourStep(Type classe)
         {
-	        throw new NotImplementedException();
+	        return new TourStep(string.Empty, string.Empty, 0);
         }
 
         private string BlockQuote(object comment)
         {
-	        throw new NotImplementedException();
+	        return string.Empty;
         }
 
         private void AddTourStep(TourStep step, string name, string qName, string codeBlock, int lineNumber)
@@ -162,12 +164,12 @@ namespace Flottio.Tests
 
         private string LinkSrcJava(string name, string qName, int lineNumber)
         {
-	        throw new NotImplementedException();
+	        return string.Empty;
         }
 
         private Tour GetTourNamed(string name)
         {
-	        throw new NotImplementedException();
+	        return new Tour();
         }
 
         private string WriteSightSeeingTour(string tourName) {
