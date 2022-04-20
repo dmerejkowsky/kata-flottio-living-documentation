@@ -4,6 +4,7 @@ using DotNetGraph.Edge;
 using DotNetGraph.Node;
 using DotNetGraph.SubGraph;
 using Flottio.FuelCardMonitoring.Domain;
+using Flottio.FuelCardMonitoring.Infra;
 using NFluent;
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,11 @@ namespace Flottio.Tests
 
         private DotGraph CreateGraph()
         {
-            Assembly flottioAssembly = typeof(Basket).Assembly;
+            Assembly domainAssembly = typeof(Basket).Assembly;
+            var infraAssembly = typeof(FuelCardTxListener).Assembly;
 
             String prefix = "Flottio.FuelCardMonitoring";
-            IEnumerable<Type> allClasses = flottioAssembly.GetTypes();
+            IEnumerable<Type> allClasses = domainAssembly.GetTypes().Union(infraAssembly.GetTypes());
             var topLevelClasses = allClasses.Where(classe => classe.Namespace.Contains(prefix));
 
             string domainPrefix = ".Domain";

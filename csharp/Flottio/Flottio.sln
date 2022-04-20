@@ -3,9 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.Tests", "Flottio.Tests\Flottio.Tests.csproj", "{83F0A113-4782-4271-AE04-2084BA70A5F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flottio.Tests", "Flottio.Tests\Flottio.Tests.csproj", "{83F0A113-4782-4271-AE04-2084BA70A5F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio", "Flottio\Flottio.csproj", "{31CCE630-1F51-41F6-AEF2-6EDDD282D7AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.Annotations", "Flottio.Annotations\Flottio.Annotations.csproj", "{09A0F179-0FC4-41BD-8F5D-B6F3020124B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.Dispatching", "Flottio.Dispatching\Flottio.Dispatching.csproj", "{A38676F6-5E1B-4761-84D2-FAEA245502BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.PreventativeMaintenance", "Flottio.PreventativeMaintenance\Flottio.PreventativeMaintenance.csproj", "{DB333D75-070B-48B0-AA32-0226C5EC9901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.FuelCardMonitoring.Infra", "Flottio.FuelCardMonitoring\Flottio.FuelCardMonitoring.Infra.csproj", "{7AB26D9A-0DF2-41D0-B3F3-343D84676573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.FuelCardMonitoring.Domain", "Flottio.FuelCardMonitoring.Domain\Flottio.FuelCardMonitoring.Domain.csproj", "{35366798-DB2F-44B7-8069-52F88F49B991}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.FuelCardMonitoring.Legacy", "Flottio.FuelCardMonitoring.Legacy\Flottio.FuelCardMonitoring.Legacy.csproj", "{D2ED141D-6154-4ACF-82D3-C9B4F0249573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flottio.FuelCardMonitoring.Monitoring", "Flottio.FuelCardMonitoring.Monitoring\Flottio.FuelCardMonitoring.Monitoring.csproj", "{AC876439-9795-4699-9195-3D6B451D8D72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +29,34 @@ Global
 		{83F0A113-4782-4271-AE04-2084BA70A5F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83F0A113-4782-4271-AE04-2084BA70A5F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83F0A113-4782-4271-AE04-2084BA70A5F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31CCE630-1F51-41F6-AEF2-6EDDD282D7AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31CCE630-1F51-41F6-AEF2-6EDDD282D7AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31CCE630-1F51-41F6-AEF2-6EDDD282D7AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31CCE630-1F51-41F6-AEF2-6EDDD282D7AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09A0F179-0FC4-41BD-8F5D-B6F3020124B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09A0F179-0FC4-41BD-8F5D-B6F3020124B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09A0F179-0FC4-41BD-8F5D-B6F3020124B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09A0F179-0FC4-41BD-8F5D-B6F3020124B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A38676F6-5E1B-4761-84D2-FAEA245502BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A38676F6-5E1B-4761-84D2-FAEA245502BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A38676F6-5E1B-4761-84D2-FAEA245502BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A38676F6-5E1B-4761-84D2-FAEA245502BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB333D75-070B-48B0-AA32-0226C5EC9901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB333D75-070B-48B0-AA32-0226C5EC9901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB333D75-070B-48B0-AA32-0226C5EC9901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB333D75-070B-48B0-AA32-0226C5EC9901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB26D9A-0DF2-41D0-B3F3-343D84676573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB26D9A-0DF2-41D0-B3F3-343D84676573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB26D9A-0DF2-41D0-B3F3-343D84676573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB26D9A-0DF2-41D0-B3F3-343D84676573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35366798-DB2F-44B7-8069-52F88F49B991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35366798-DB2F-44B7-8069-52F88F49B991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35366798-DB2F-44B7-8069-52F88F49B991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35366798-DB2F-44B7-8069-52F88F49B991}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2ED141D-6154-4ACF-82D3-C9B4F0249573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2ED141D-6154-4ACF-82D3-C9B4F0249573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2ED141D-6154-4ACF-82D3-C9B4F0249573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2ED141D-6154-4ACF-82D3-C9B4F0249573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC876439-9795-4699-9195-3D6B451D8D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC876439-9795-4699-9195-3D6B451D8D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC876439-9795-4699-9195-3D6B451D8D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC876439-9795-4699-9195-3D6B451D8D72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

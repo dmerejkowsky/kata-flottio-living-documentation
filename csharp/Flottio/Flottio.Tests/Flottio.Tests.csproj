@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -16,7 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Flottio\Flottio.csproj" />
+    <ProjectReference Include="..\Flottio.Annotations\Flottio.Annotations.csproj" />
+    <ProjectReference Include="..\Flottio.Dispatching\Flottio.Dispatching.csproj" />
+    <ProjectReference Include="..\Flottio.FuelCardMonitoring.Domain\Flottio.FuelCardMonitoring.Domain.csproj" />
+    <ProjectReference Include="..\Flottio.FuelCardMonitoring.Legacy\Flottio.FuelCardMonitoring.Legacy.csproj" />
+    <ProjectReference Include="..\Flottio.FuelCardMonitoring.Monitoring\Flottio.FuelCardMonitoring.Monitoring.csproj" />
+    <ProjectReference Include="..\Flottio.FuelCardMonitoring\Flottio.FuelCardMonitoring.Infra.csproj" />
+    <ProjectReference Include="..\Flottio.PreventativeMaintenance\Flottio.PreventativeMaintenance.csproj" />
   </ItemGroup>
 
   <ItemGroup>
