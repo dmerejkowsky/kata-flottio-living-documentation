@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Flottio.FuelCardMonitoring.Domain;
 using NFluent;
@@ -13,16 +14,15 @@ namespace Flottio.Tests
     public class LivingGuidedTourTest
     {
         private readonly ITestOutputHelper _testOutputHelper;
-
         public LivingGuidedTourTest(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
         
-        private const string SEP = "\n\n";
+        private const string SEP = "\r\n";
 		private const string CONTEXT_PREFIX = "Flottio.FuelCardMonitoring";
-        private const string ANNOTATION_NAME = "flottio.annotations.GuidedTour";
-        private const string REPO_LINKS_PREFIX = "https://github.com/cyriux/livingdocumentation-workshop/blob/master/living-documentation-workshop";
+        private const string ANNOTATION_NAME = "Flottio.Annotations.GuidedTour";
+        private const string REPO_LINKS_PREFIX = "https://github.com/iAmDorra/livingdocumentation-workshop";
 
         private readonly Dictionary<string, Tour> tours = new Dictionary<string, Tour>();
         
@@ -96,9 +96,7 @@ namespace Flottio.Tests
 
         private void Process(Type classe)
         {
-	        string comment = BlockQuote(
-		        string.Empty//classe.GetComment()
-		        );
+	        string comment = BlockQuote(classe);
 	        AddTourStep(
 		        GetQuickDevTourStep(classe), 
 		        classe.Name, 
@@ -135,15 +133,22 @@ namespace Flottio.Tests
 
         private TourStep GetQuickDevTourStep(Type classe)
         {
-	        return new TourStep(string.Empty, string.Empty, 0);
+	        foreach (var guidedTour in classe.GetCustomAttributes<GuidedTourAttribute>())
+	        {
+		        return new TourStep(
+				        guidedTour.Name.Replace("\"", ""),
+				        guidedTour.Description.Replace("\"", ""),
+				        guidedTour.Rank);
+	        }
+	        return null;
         }
 
-        private string BlockQuote(object comment)
+        private string BlockQuote(Type classe)
         {
-	        return string.Empty;
+	        return classe.GetCustomAttribute<CommentsAttribute>()?.Comments;
         }
 
-        private void AddTourStep(TourStep step, string name, string qName, string codeBlock, int lineNumber)
+        private void AddTourStep(TourStep step, string name, string qName, string comment, int lineNumber)
         {
 	        if (step != null) {
 		        StringBuilder content = new StringBuilder();
@@ -152,24 +157,36 @@ namespace Flottio.Tests
 			        content.Append(SEP);
 			        content.Append("*" + step.Description().Trim() + "*");
 		        }
-		        // if (comment != null) {
-			       //  content.Append(SEP);
-			       //  content.Append(comment);
-		        // }
+		        if (comment != null) {
+			        content.Append(SEP);
+			        content.Append(comment);
+		        }
 		        content.Append(SEP);
 
 		        GetTourNamed(step.Name()).Put(step.Step(), content.ToString());
 	        }
         }
+        
+        private string Link(string name, string url) {
+	        return "[" + name + "](" + url + ")";
+        }
+
 
         private string LinkSrcJava(string name, string qName, int lineNumber)
         {
-	        return string.Empty;
+	        return Link(name, REPO_LINKS_PREFIX + "/blob/master/csharp/Flottio/" + qName.Replace('.', '/') + ".cs#L" + lineNumber);
         }
 
         private Tour GetTourNamed(string name)
         {
-	        return new Tour();
+	        if (tours.ContainsKey(name))
+	        {
+		        return tours[name];
+	        }
+
+	        var tour = new Tour();
+	        tours.Add(name, tour);
+	        return tour;
         }
 
         private string WriteSightSeeingTour(string tourName) {
