@@ -106,20 +106,8 @@ namespace Flottio.Tests
 		        );
 
 	        if (classe.IsEnum) {
-		        // for (JavaField field : classe.getEnumConstants()) {
-			       //  // printEnumConstant(field);
-		        // }
-		        // for (JavaMethod method : classe.GetMethods(false)) {
-			       //  //
-		        // }
 	        } else if (classe.IsInterface) {
-		        // for (JavaClass subClass in classe.getDerivedClasses()) {
-			       //  // printSubClass(subClass);
-		        // }
 	        } else {
-		        // for (JavaField field : classe.getFields()) {
-			       //  // printField(field);
-		        // }
 		        foreach (var m in classe.GetMethods()) {
 			        string name = m.Name;
 			        string qName = classe.FullName;
@@ -153,12 +141,15 @@ namespace Flottio.Tests
 	        if (step != null) {
 		        StringBuilder content = new StringBuilder();
 		        content.Append(LinkSrcJava(name, qName, lineNumber));
+		        content.Append(SEP);
 		        if (step.Description() != null) {
 			        content.Append(SEP);
 			        content.Append("*" + step.Description().Trim() + "*");
 		        }
+		        content.Append(SEP);
 		        if (comment != null) {
 			        content.Append(SEP);
+			        content.Append("> ");
 			        content.Append(comment);
 		        }
 		        content.Append(SEP);
@@ -196,12 +187,10 @@ namespace Flottio.Tests
 			int count = 1;
 			foreach (string step in tour.Sites.Values) {
 				sb.Append(SEP);
-				sb.Append("## " + count++ + ". " + step);
+				sb.Append("## " + count + ". " + step);
+				sb.Append(SEP);
+				count++;
 			}
-			// string title = tourName;
-			// string content = sb.ToString();
-			// string text = string.Format(template, new Object[] { title, content });
-			// write("", tourName.replaceAll(" ", "_") + ".html", text);
 			return sb.ToString();
         }
     }
