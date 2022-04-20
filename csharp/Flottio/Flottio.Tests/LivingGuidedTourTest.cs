@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Flottio.Annotations;
 using Flottio.FuelCardMonitoring.Domain;
 using NFluent;
 using Xunit;
