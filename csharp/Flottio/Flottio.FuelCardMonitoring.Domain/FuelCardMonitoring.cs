@@ -29,7 +29,7 @@ namespace Flottio.FuelCardMonitoring.Domain
             this.geocoding = geocoding;
         }
 
-        [GuidedTour("Quick Developer Tour", "The method which does all the potential fraud detection for an incoming fuel card transaction",  4)]
+    [GuidedTour("Quick Developer Tour", "The method which does all the potential fraud detection for an incoming fuel card transaction",  4)]
     public FuelCardTransactionReport monitor(FuelCardTransaction transaction, Vehicle vehicle)
         {
              Coordinates actualLocation = tracking.locationAt(vehicle.getVehicleId().ToString(),

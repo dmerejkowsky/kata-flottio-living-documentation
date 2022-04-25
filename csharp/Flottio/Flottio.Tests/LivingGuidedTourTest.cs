@@ -114,16 +114,17 @@ namespace Flottio.Tests
 	        if (classe.IsEnum) {
 	        } else if (classe.IsInterface) {
 	        } else {
-		        foreach (var m in classe.GetMethods()) {
-			        string name = m.Name;
+		        foreach (var methodInfo in classe.GetMethods(BindingFlags.Public|BindingFlags.Instance|BindingFlags.DeclaredOnly)) {
+			        string name = methodInfo.Name;
 			        string qName = classe.FullName;
-			        string codeBlock = string.Empty; //Code(m.GetCodeBlock());
+			        string codeBlock = string.Empty; //Code(methodInfo);
 			        int lineNumber = 0; //m.GetLineNumber();
-			        TourStep step = GetQuickDevTourStep(m.GetType());
+			        TourStep step = GetQuickDevTourStep(methodInfo);
 			        AddTourStep(step, name, qName, codeBlock, lineNumber);
 		        }
 	        }
         }
+        
 
         private TourStep GetQuickDevTourStep(Type classe)
         {
@@ -133,6 +134,18 @@ namespace Flottio.Tests
 				        guidedTour.Name.Replace("\"", ""),
 				        guidedTour.Description.Replace("\"", ""),
 				        guidedTour.Rank);
+	        }
+	        return null;
+        }
+        
+        private TourStep GetQuickDevTourStep(MethodInfo methodInfo)
+        {
+	        foreach (var guidedTour in methodInfo.GetCustomAttributes<GuidedTourAttribute>())
+	        {
+		        return new TourStep(
+			        guidedTour.Name.Replace("\"", ""),
+			        guidedTour.Description.Replace("\"", ""),
+			        guidedTour.Rank);
 	        }
 	        return null;
         }
