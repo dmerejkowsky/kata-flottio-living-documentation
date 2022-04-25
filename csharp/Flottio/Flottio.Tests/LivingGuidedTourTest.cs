@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using Flottio.Annotations;
 using Flottio.FuelCardMonitoring.Domain;
+using Flottio.FuelCardMonitoring.Infra;
 using NFluent;
 using Xunit;
 using Xunit.Abstractions;
@@ -89,7 +90,11 @@ namespace Flottio.Tests
 
         private void PrintAll()
         {
-	        var classes = typeof(Basket).Assembly.GetTypes();
+	        var domainClasses = typeof(Basket).Assembly.GetTypes();
+	        var infraClasses = typeof(ReportDAO).Assembly.GetTypes();
+	        var classes = new List<Type>();
+	        classes.AddRange(domainClasses);
+	        classes.AddRange(infraClasses);
 	        foreach (var classe in classes.Where(cl => cl.Namespace.Contains(CONTEXT_PREFIX))) {
 		        Process(classe);
 	        }

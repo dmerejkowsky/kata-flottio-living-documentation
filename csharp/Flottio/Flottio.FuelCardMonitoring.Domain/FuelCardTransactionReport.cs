@@ -10,6 +10,7 @@ namespace Flottio.FuelCardMonitoring.Domain
 	 */
     [ValueObject]
     [CoreConcept]
+    [Comments("The fuel card monitoring report for one transaction, with a status and any potential issue found.")]
     [GuidedTour("Quick Developer Tour", "The report for an incoming fuel card transaction", 5)]
     public class FuelCardTransactionReport
     {

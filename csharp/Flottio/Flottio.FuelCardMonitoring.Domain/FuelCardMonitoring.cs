@@ -11,6 +11,7 @@ namespace Flottio.FuelCardMonitoring.Domain
 	 */
     [DomainService]
     [CoreConcept]
+    [Comments("Monitoring of fuel card use to help improve fuel efficiency and detect fuel leakages and potential driver misbehaviors.")]
     [GuidedTour("Quick Developer Tour", "The service which takes care of all the fuel card monitoring", 3)]
     public class FuelCardMonitoring
     {

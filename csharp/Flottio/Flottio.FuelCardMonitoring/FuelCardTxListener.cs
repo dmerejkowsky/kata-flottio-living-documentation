@@ -11,6 +11,7 @@ namespace Flottio.FuelCardMonitoring.Infra
      * Fuel Card Provider
      */
     [ExternalActor("Fuelo Fuel Card Provider", ActorType.SYSTEM, Direction.API)]
+    [Comments("Listens to incoming fuel card transactions from the external system of the Fuel Card Provider")]
     [GuidedTour("Quick Developer Tour", "The MQ listener which triggers a full chain of processing", 1)]
     public class FuelCardTxListener
     {
