@@ -18,8 +18,8 @@ public class WordCloudTest {
 
 	@Test
 	public void generateWordCloud() throws IOException {
-		//final String sourceFolder = "/src/main/java/flottio/dispatching";
-		final String sourceFolder = "/src/main/java/flottio/fuelcardmonitoring";
+		final String sourceFolder = "/src/main/java/flottio/dispatching";
+		//final String sourceFolder = "/src/main/java/flottio/fuelcardmonitoring";
 		generateWordCloud(baseDir() + sourceFolder, "wordcloud.html");
 	}
 
