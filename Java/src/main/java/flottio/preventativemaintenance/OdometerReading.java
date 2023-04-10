@@ -54,7 +54,7 @@ public class OdometerReading {
 			return false;
 		}
 		final OdometerReading other = (OdometerReading) obj;
-		return other.date.equals(other.date) && odometer.equals(other.odometer);
+		return date.equals(other.date) && odometer.equals(other.odometer);
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public class FueldCard {
 			return false;
 		}
 		FueldCard other = (FueldCard) obj;
-		return other.id.equals(other.id) && other.name.equals(other.name) && other.type.equals(other.type);
+		return id.equals(other.id) && name.equals(other.name) && type.equals(other.type);
 	}
 
 	@Override

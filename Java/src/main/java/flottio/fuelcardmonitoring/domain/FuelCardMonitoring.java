@@ -3,17 +3,17 @@
  */
 package flottio.fuelcardmonitoring.domain;
 
-import static flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus.ANOMALY;
-import static flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus.VERIFIED;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import flottio.annotations.CoreConcept;
 import flottio.annotations.DomainService;
 import flottio.annotations.GuidedTour;
 import flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import static flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus.ANOMALY;
+import static flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus.VERIFIED;
 
 /**
  * Monitoring of fuel card use to help improve fuel efficiency and detect fuel
@@ -63,17 +63,12 @@ public class FuelCardMonitoring {
 		}
 
 		// don't forget to clean up possible null in the list
-		List<String> l = new ArrayList<String>();
+		List<String> l = new ArrayList<>();
 		l.add(null);
-		Iterator<String> it = l.iterator();
-		while (it.hasNext()) {
-			if (it.next() == null) {
-				it.remove();
-			}
-		}
+		l.removeIf(Objects::isNull);
 		// if the list of issues is empty the status is VERIFIED, otherwise it's
 		// ANOMALY
-		MonitoringStatus status = null;
+		MonitoringStatus status;
 		if (list.size() == 0) {
 			status = VERIFIED;
 		} else {
