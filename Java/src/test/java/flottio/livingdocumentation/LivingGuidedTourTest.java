@@ -1,28 +1,18 @@
 package flottio.livingdocumentation;
 
-import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
-import static flottio.livingdocumentation.SimpleTemplate.write;
+import com.thoughtworks.qdox.JavaProjectBuilder;
+import com.thoughtworks.qdox.model.*;
+import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.junit.Test;
-
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaAnnotatedElement;
-import com.thoughtworks.qdox.model.JavaAnnotation;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaPackage;
+import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
+import static flottio.livingdocumentation.SimpleTemplate.write;
 
 public class LivingGuidedTourTest {
 
@@ -35,10 +25,10 @@ public class LivingGuidedTourTest {
 
 	private PrintWriter writer;
 
-	private final Map<String, Tour> tours = new HashMap<String, Tour>();
+	private final Map<String, Tour> tours = new HashMap<>();
 
 	private static class Tour {
-		private final SortedMap<Integer, String> sites = new TreeMap<Integer, String>();
+		private final SortedMap<Integer, String> sites = new TreeMap<>();
 
 		public String put(int step, String describtion) {
 			return sites.put(step, describtion);
@@ -106,7 +96,7 @@ public class LivingGuidedTourTest {
 		}
 		String title = tourName;
 		String content = out.toString();
-		final String text = MessageFormat.format(template, new Object[] { title, content });
+		final String text = MessageFormat.format(template, title, content);
 		write("", tourName.replaceAll(" ", "_") + ".html", text);
 	}
 

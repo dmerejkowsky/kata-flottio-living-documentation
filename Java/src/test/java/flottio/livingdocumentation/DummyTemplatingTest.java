@@ -1,15 +1,14 @@
 package flottio.livingdocumentation;
 
-import static flottio.livingdocumentation.SimpleTemplate.evaluate;
-import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
-import static flottio.livingdocumentation.SimpleTemplate.write;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static flottio.livingdocumentation.SimpleTemplate.*;
+
 
 public class DummyTemplatingTest {
 
@@ -19,7 +18,7 @@ public class DummyTemplatingTest {
 
 		String title = "Living Glossary";
 		String content = "# Big Title \n ## Second title \n \n sample text goes here bla blab...";
-		final String text = MessageFormat.format(template, new Object[] { title, content });
+		final String text = MessageFormat.format(template, title, content);
 		write("", "livingglossary.html", text);
 	}
 
@@ -34,7 +33,7 @@ public class DummyTemplatingTest {
 	}
 
 	@Test
-	@Ignore
+	@Disabled
 	public void testWordCloudTemplate() throws UnsupportedEncodingException, FileNotFoundException {
 		final String template = readTestResource("wordcloud-template.html");
 

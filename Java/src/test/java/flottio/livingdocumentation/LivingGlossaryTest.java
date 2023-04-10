@@ -1,7 +1,8 @@
 package flottio.livingdocumentation;
 
-import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
-import static flottio.livingdocumentation.SimpleTemplate.write;
+import com.thoughtworks.qdox.JavaProjectBuilder;
+import com.thoughtworks.qdox.model.*;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -11,14 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.Test;
-
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaAnnotation;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaPackage;
+import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
+import static flottio.livingdocumentation.SimpleTemplate.write;
 
 public class LivingGlossaryTest {
 
@@ -48,7 +43,7 @@ public class LivingGlossaryTest {
 
 			String title = "Living Glossary";
 			String content = out.toString();
-			final String text = MessageFormat.format(template, new Object[] { title, content });
+			final String text = MessageFormat.format(template, title, content);
 			write("", "livingglossary.html", text);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,7 +63,7 @@ public class LivingGlossaryTest {
 	 * Creates an inventory of every package that defines a Bounded Context
 	 */
 	private static Map<JavaPackage, JavaAnnotation> boundedContextInventory(JavaProjectBuilder builder) {
-		final Map<JavaPackage, JavaAnnotation> contexts = new HashMap<JavaPackage, JavaAnnotation>();
+		final Map<JavaPackage, JavaAnnotation> contexts = new HashMap<>();
 		for (JavaPackage p : builder.getPackages()) {
 			final JavaAnnotation boundedContext = boundedContextAnnotation(p);
 			if (boundedContext != null) {
