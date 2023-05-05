@@ -1,25 +1,23 @@
 package flottio.fuelcardmonitoring.domain;
 
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class FuelCardMonitoringTest {
 
 	@Test
-	public void testName() throws Exception {
-		List<String> l = new ArrayList<String>();
+	public void testName() {
+		List<String> l = new ArrayList<>();
 		l.add(null);
-		Iterator<String> it = l.iterator();
-		while (it.hasNext()) {
-			if (it.next() == null) {
-				it.remove();
-			}
-		}
-		assertEquals(0, l.size());
+		l.removeIf(Objects::isNull);
+
+		assertThat(l).isEmpty();
 	}
 }

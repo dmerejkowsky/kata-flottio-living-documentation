@@ -1,11 +1,9 @@
 package flottio.fuelcardmonitoring.domain;
 
-import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import flottio.fuelcardmonitoring.domain.Coordinates;
-import flottio.fuelcardmonitoring.domain.GeoDistance;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GeoDistanceTest {
 
@@ -14,7 +12,7 @@ public class GeoDistanceTest {
 	private final Coordinates EIFFEL_TOWER = new Coordinates(48.858222, 2.2945);
 
 	@Test
-	public void distance_zero_between_two_identical_points() throws Exception {
+	public void distance_zero_between_two_identical_points() {
 		assertEquals(0, GeoDistance.EQUIRECTANGULAR.distanceBetween(CENTRE_POMPIDOU, CENTRE_POMPIDOU), 0.1);
 	}
 

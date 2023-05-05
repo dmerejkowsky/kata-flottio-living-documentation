@@ -19,7 +19,7 @@ public class DispatchingOptimizationService {
 	private VehicleAssignmentEntity vehicleAssignmentEntity;
 	
 	public Map<String, String> perform(Map<String, String> inputTable) {
-		final HashMap<String, String> map = new HashMap<String, String>();
+		final HashMap<String, String> map = new HashMap<>();
 		int index = 0;
 		index = forEachDriverCell(inputTable, map, index);
 		return map;

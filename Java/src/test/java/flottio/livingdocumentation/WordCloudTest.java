@@ -1,18 +1,13 @@
 package flottio.livingdocumentation;
 
-import static flottio.livingdocumentation.SimpleTemplate.evaluate;
-import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
-import static flottio.livingdocumentation.SimpleTemplate.write;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import org.junit.Test;
-
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multiset.Entry;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+
+import static flottio.livingdocumentation.SimpleTemplate.*;
 
 public class WordCloudTest {
 
@@ -27,8 +22,7 @@ public class WordCloudTest {
 		return new File("").getAbsolutePath();
 	}
 
-	public void generateWordCloud(final String sourceFolder, String outputFileName) throws IOException,
-			UnsupportedEncodingException, FileNotFoundException {
+	public void generateWordCloud(final String sourceFolder, String outputFileName) throws IOException {
 		final WordCloud wordCloud = new WordCloud();
 		wordCloud.scan(sourceFolder);
 

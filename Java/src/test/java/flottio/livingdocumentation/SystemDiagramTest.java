@@ -1,31 +1,26 @@
 package flottio.livingdocumentation;
 
-import static flottio.livingdocumentation.SimpleTemplate.evaluate;
-import static flottio.livingdocumentation.SimpleTemplate.readTestResource;
-import static flottio.livingdocumentation.SimpleTemplate.write;
-import static org.livingdocumentation.dotdiagram.DotStyles.NOTE_EDGE_STYLE;
-import static org.livingdocumentation.dotdiagram.DotStyles.STUB_NODE_OPTIONS;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
-
-import org.junit.Test;
-import org.livingdocumentation.dotdiagram.DotGraph;
-import org.livingdocumentation.dotdiagram.DotGraph.Digraph;
-
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
 import com.thoughtworks.qdox.JavaProjectBuilder;
 import com.thoughtworks.qdox.model.JavaAnnotatedElement;
-
 import flottio.annotations.BoundedContext;
 import flottio.annotations.ExternalActor;
 import flottio.annotations.ExternalActor.ActorType;
+import org.junit.jupiter.api.Test;
+import org.livingdocumentation.dotdiagram.DotGraph;
+import org.livingdocumentation.dotdiagram.DotGraph.Digraph;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import static flottio.livingdocumentation.SimpleTemplate.*;
+import static org.livingdocumentation.dotdiagram.DotStyles.NOTE_EDGE_STYLE;
+import static org.livingdocumentation.dotdiagram.DotStyles.STUB_NODE_OPTIONS;
 
 /**
  * Living Diagram of the system and its external actors generated out of the
@@ -55,7 +50,7 @@ public class SystemDiagramTest {
 		final String domainPackageName = prefix + "." + "domain";
 
 		final ImmutableSet<ClassInfo> domain = classPath.getTopLevelClasses(domainPackageName);
-		final Map<ClassInfo, BoundedContext> inventory = new HashMap<ClassPath.ClassInfo, BoundedContext>();
+		final Map<ClassInfo, BoundedContext> inventory = new HashMap<>();
 		for (ClassInfo ci : domain) {
 			BoundedContext bc = findBoundedContext(ci);
 			if (bc != null) {
@@ -71,11 +66,7 @@ public class SystemDiagramTest {
 					.setOptions(STUB_NODE_OPTIONS);
 
 			final Stream<ClassInfo> infra = allClasses.stream().filter(notIn("domain"));
-			infra.forEach(new Consumer<ClassInfo>() {
-				public void accept(ClassInfo ci) {
-					printActor(digraph, ci, builder);
-				}
-			});
+			infra.forEach(ci -> printActor(digraph, ci, builder));
 		}
 
 		// render into image
@@ -105,7 +96,7 @@ public class SystemDiagramTest {
 		return first;
 	}
 
-	private final static String wrap(String words, final int length) {
+	private static String wrap(String words, final int length) {
 		final StringBuilder sb = new StringBuilder(words);
 		int i = 0;
 		while (i + length < sb.length() && (i = sb.lastIndexOf(" ", i + length)) != -1) {
@@ -144,7 +135,7 @@ public class SystemDiagramTest {
 		return ci.getResourceName().replace(".class", ".java").replace("package-info.java", "");
 	}
 
-	private final static String actorType(ActorType type) {
+	private static String actorType(ActorType type) {
 		switch (type) {
 		case PEOPLE:
 			return "External User";

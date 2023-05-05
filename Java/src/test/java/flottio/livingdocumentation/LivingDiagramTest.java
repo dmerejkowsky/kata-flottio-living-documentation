@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.livingdocumentation.dotdiagram.DotGraph;
 import org.livingdocumentation.dotdiagram.DotGraph.Cluster;
 import org.livingdocumentation.dotdiagram.DotGraph.Digraph;
@@ -43,24 +43,22 @@ public class LivingDiagramTest {
 		core.setLabel("Core Domain");
 
 		// add all domain model elements first
-		domain.forEach(new Consumer<ClassInfo>() {
-			public void accept(ClassInfo ci) {
-				final Class clazz = ci.load();
-				core.addNode(clazz.getName()).setLabel(clazz.getSimpleName()).setComment(clazz.getSimpleName());
-			}
+		domain.forEach(ci -> {
+			final Class<?> clazz = ci.load();
+			core.addNode(clazz.getName()).setLabel(clazz.getSimpleName()).setComment(clazz.getSimpleName());
 		});
 
 		Stream<ClassInfo> infra = allClasses.stream().filter(filterNot(prefix, "domain"));
 		infra.forEach(new Consumer<ClassInfo>() {
 			public void accept(ClassInfo ci) {
-				final Class clazz = ci.load();
+				final Class<?> clazz = ci.load();
 				digraph.addNode(clazz.getName()).setLabel(clazz.getSimpleName()).setComment(clazz.getSimpleName());
 			}
 		});
 		infra = allClasses.stream().filter(filterNot(prefix, "domain"));
 		infra.forEach(new Consumer<ClassInfo>() {
 			public void accept(ClassInfo ci) {
-				final Class clazz = ci.load();
+				final Class<?> clazz = ci.load();
 				// API
 				for (Field field : clazz.getDeclaredFields()) {
 					final Class<?> type = field.getType();
