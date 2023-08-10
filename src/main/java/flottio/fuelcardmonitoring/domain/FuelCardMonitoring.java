@@ -3,25 +3,21 @@
  */
 package flottio.fuelcardmonitoring.domain;
 
-import flottio.annotations.CoreConcept;
-import flottio.annotations.DomainService;
-import flottio.annotations.GuidedTour;
-import flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import static flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus.ANOMALY;
 import static flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus.VERIFIED;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import flottio.annotations.DomainService;
+import flottio.fuelcardmonitoring.domain.FuelCardTransactionReport.MonitoringStatus;
+
 /**
- * Monitoring of fuel card use to help improve fuel efficiency and detect fuel
+ * Monitoring of fuel card use helps improve fuel efficiency and detect fuel
  * leakages and potential driver misbehaviors.
  */
 @DomainService
-@CoreConcept
-@GuidedTour(name = "Quick Developer Tour", description = "The service which takes care of all the fuel card monitoring", rank = 3)
 public class FuelCardMonitoring {
 
 	// The LocationTrackingService instance
@@ -36,7 +32,7 @@ public class FuelCardMonitoring {
 		this.geocoding = geocoding;
 	}
 
-	@GuidedTour(name = "Quick Developer Tour", description = "The method which does all the potential fraud detection for an incoming fuel card transaction", rank = 4)
+	// This public method does the job
 	public FuelCardTransactionReport monitor(FuelCardTransaction transaction, Vehicle vehicle) {
 		final Coordinates actualLocation = tracking.locationAt(String.valueOf(vehicle.getVehicleId()),
 				transaction.getDate());
@@ -63,12 +59,17 @@ public class FuelCardMonitoring {
 		}
 
 		// don't forget to clean up possible null in the list
-		List<String> l = new ArrayList<>();
+		List<String> l = new ArrayList<String>();
 		l.add(null);
-		l.removeIf(Objects::isNull);
+		Iterator<String> it = l.iterator();
+		while (it.hasNext()) {
+			if (it.next() == null) {
+				it.remove();
+			}
+		}
 		// if the list of issues is empty the status is VERIFIED, otherwise it's
 		// ANOMALY
-		MonitoringStatus status;
+		MonitoringStatus status = null;
 		if (list.size() == 0) {
 			status = VERIFIED;
 		} else {
