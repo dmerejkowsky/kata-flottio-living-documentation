@@ -18,3 +18,9 @@ obj/
 bin/
 obj/
 *.user
+
+/.classpath
+/.project
+/target
+/.settings
+
